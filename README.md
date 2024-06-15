@@ -1,5 +1,5 @@
 ## Rick And Morty App
-<img src='images/ss1.png' height='400' /> <img src='images/ss2.png' height='400' /> <img src='images/ss3.png' height='400' />
+<img src='screenshots/ss1.png' height='400' /> <img src='screenshots/ss2.png' height='400' /> <img src='screenshots/ss3.png' height='400' />
 
 # Technology
 - React Native
