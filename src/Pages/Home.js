@@ -15,8 +15,11 @@ import {useNavigation} from '@react-navigation/native';
 
 import useFetch from '../Hooks/useFetch';
 
+import routes from '../navigation/routes';
+
 const Home = () => {
   const navigation = useNavigation();
+
   const [episodes, setEpisodes] = useState([]);
   const [page, setPage] = useState(1);
   const [showMoreButton, setShowMoreButton] = useState(true);
@@ -45,7 +48,7 @@ const Home = () => {
         style={styles.detailButton}
         activeOpacity={0.8}
         onPress={() =>
-          navigation.navigate('EpisodeDetail', {episodeDetails: item})
+          navigation.navigate(routes.EPISODE_DETAIL, {episodeDetails: {item}})
         }>
         <View style={styles.itemContainer}>
           <View style={styles.textContainer}>

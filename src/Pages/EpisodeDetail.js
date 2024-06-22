@@ -14,6 +14,7 @@ import Header from '../Components/Header';
 
 const EpisodeDetail = ({route}) => {
   const {episodeDetails} = route.params;
+
   const [characters, setCharacters] = useState([]);
 
   const navigation = useNavigation();
@@ -21,9 +22,11 @@ const EpisodeDetail = ({route}) => {
   useEffect(() => {
     const fetchCharacterDetails = async () => {
       const characterDetails = await Promise.all(
-        episodeDetails.characters.map(async characterUrl => {
+        episodeDetails.item.characters.map(async characterUrl => {
           const response = await fetch(characterUrl);
+
           const characterData = await response.json();
+
           return characterData;
         }),
       );
@@ -35,7 +38,7 @@ const EpisodeDetail = ({route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title={episodeDetails.episode} />
+      <Header title={episodeDetails.item.episode} />
 
       <Text style={styles.nameText}>{episodeDetails.name}</Text>
       <Text style={styles.airDateText}>
