@@ -1,13 +1,44 @@
-import {SafeAreaView, Text, StyleSheet, Image, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
+import {
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+
+import {addFavoriteCharacter, removeFavoriteCharacter} from '../redux/favorite';
+
 import Header from '../Components/Header';
+import HeartIcon from '../assets/svg/heart.svg';
 
 const CharacterDetail = ({route}) => {
   const {character} = route.params;
 
+  const dispatch = useDispatch();
+
+  const [isPressed, setIsPressed] = useState(false);
+
+  const favoriteCharacters = useSelector(
+    state => state.favorite.favoriteCharacterList,
+  );
+
+  const isFavorite = favoriteCharacters.find(c => c.id === character.id);
+
+  const handlePress = () => {
+    setIsPressed(!isPressed);
+    if (isFavorite) {
+      dispatch(removeFavoriteCharacter(character));
+    } else {
+      dispatch(addFavoriteCharacter(character));
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Header title={character.name} />
+      <Header title={character.name} icon={true} />
       <View style={styles.imageContainer}>
         <Image
           source={{uri: character.image}}
@@ -15,6 +46,15 @@ const CharacterDetail = ({route}) => {
           resizeMode="cover"
         />
       </View>
+      <TouchableOpacity
+        style={styles.favoriteContainer}
+        onPress={() => handlePress()}>
+        <HeartIcon
+          width={30}
+          height={30}
+          fill={isFavorite ? '#dd0000' : '#ffffff'}
+        />
+      </TouchableOpacity>
 
       <View style={styles.content}>
         <View style={styles.textContainer}>
@@ -75,5 +115,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     margin: 7,
+  },
+  favoriteContainer: {
+    position: 'absolute',
+    right: 20,
+    top: 170,
   },
 });
