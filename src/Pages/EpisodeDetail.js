@@ -22,7 +22,7 @@ const EpisodeDetail = ({route}) => {
   useEffect(() => {
     const fetchCharacterDetails = async () => {
       const characterDetails = await Promise.all(
-        episodeDetails.item.characters.map(async characterUrl => {
+        episodeDetails.characters.map(async characterUrl => {
           const response = await fetch(characterUrl);
 
           const characterData = await response.json();
@@ -38,7 +38,7 @@ const EpisodeDetail = ({route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title={episodeDetails.item.episode} />
+      <Header title={episodeDetails.episode} />
 
       <Text style={styles.nameText}>{episodeDetails.name}</Text>
       <Text style={styles.airDateText}>
