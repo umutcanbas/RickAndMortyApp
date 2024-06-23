@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -7,9 +8,8 @@ import {
   View,
   Image,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
 
-import Header from '../Components/Header';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -17,11 +17,21 @@ import useFetch from '../Hooks/useFetch';
 
 import routes from '../navigation/routes';
 
+import {addFavoriteEpisode, removeFavoriteEpisode} from '../redux/favorite';
+
+import HeartIcon from '../assets/svg/heart.svg';
+
+import Header from '../Components/Header';
+
 const Home = () => {
   const navigation = useNavigation();
 
+  const dispatch = useDispatch();
+
   const [episodes, setEpisodes] = useState([]);
+
   const [page, setPage] = useState(1);
+
   const [showMoreButton, setShowMoreButton] = useState(true);
 
   const {data, loading, error} = useFetch(
@@ -42,20 +52,50 @@ const Home = () => {
     setPage(page + 1);
   };
 
+  const favoriteEpisodes = useSelector(
+    state => state.favorite.favoriteEpisodeList,
+  );
+
+  const handlePress = item => {
+    const isFavorite = favoriteEpisodes.some(episode => episode.id === item.id);
+
+    if (isFavorite) {
+      dispatch(removeFavoriteEpisode(item));
+    } else {
+      dispatch(addFavoriteEpisode(item));
+    }
+  };
+
   const renderItem = ({item}) => {
+    const isFavorite = favoriteEpisodes.some(episode => episode.id === item.id);
+
     return (
       <TouchableOpacity
         style={styles.detailButton}
         activeOpacity={0.8}
         onPress={() =>
-          navigation.navigate(routes.EPISODE_DETAIL, {episodeDetails: {item}})
+          navigation.navigate(routes.EPISODE_DETAIL, {episodeDetails: item})
         }>
         <View style={styles.itemContainer}>
           <View style={styles.textContainer}>
             <Text style={styles.nameText}>{item.name}</Text>
             <Text style={styles.episodeText}>{item.episode}</Text>
+
+            <View style={styles.favoriteContainer}>
+              <TouchableOpacity onPress={() => handlePress(item)}>
+                <HeartIcon
+                  width={25}
+                  height={25}
+                  fill={isFavorite ? '#dd0000' : '#ffffff'}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-          <Image source={require('../assets/Image.png')} style={styles.image} />
+
+          <Image
+            source={require('../assets/png/Image.png')}
+            style={styles.image}
+          />
         </View>
       </TouchableOpacity>
     );
@@ -67,6 +107,7 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Episodes" />
+
       <FlatList
         data={episodes}
         keyExtractor={(item, index) => `${item.id}-${index}`}
@@ -106,7 +147,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     margin: 10,
   },
-
   itemContainer: {
     padding: 16,
     flexDirection: 'row',
@@ -133,5 +173,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
     fontWeight: 'bold',
+  },
+  favoriteContainer: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
   },
 });
