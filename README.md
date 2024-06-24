@@ -1,5 +1,6 @@
 ## Rick And Morty App
-<img src='screenshots/ss1.png' height='400' /> <img src='screenshots/ss2.png' height='400' /> <img src='screenshots/ss3.png' height='400' />
+<img src='screenshots/ss6.png' height='400' /> <img src='screenshots/ss2.png' height='400' /> <img src='screenshots/ss7.png' height='400' />
+<img src='screenshots/ss4.png' height='400' /> <img src='screenshots/ss5.png' height='400' />
 
 # Technology
 - React Native
@@ -7,6 +8,7 @@
 # Tools
 
 - React Navigation
+- Redux Toolkit
 - RickAndMortyApi
 
 ## Features
@@ -14,6 +16,7 @@
 - Listing episodes and navigating to their details
 - Showing episode details and listing characters in the episode
 - Detail of characters
+- Select favorite character and episode
 
 
 # Getting Started
