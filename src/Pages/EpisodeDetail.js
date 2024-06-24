@@ -11,6 +11,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 
 import Header from '../Components/Header';
+import routes from '../navigation/routes';
 
 const EpisodeDetail = ({route}) => {
   const {episodeDetails} = route.params;
@@ -48,8 +49,9 @@ const EpisodeDetail = ({route}) => {
       <ScrollView style={styles.scrollView}>
         {characters.map((character, index) => (
           <TouchableOpacity
+            activeOpacity={0.8}
             key={character.id}
-            onPress={() => navigation.navigate('CharacterDetail', {character})}>
+            onPress={() => navigation.navigate(routes.CHARACTER_DETAIL, {character})}>
             <View style={styles.characterNameContainer}>
               <Text style={styles.characterNameText}>{character.name}</Text>
             </View>

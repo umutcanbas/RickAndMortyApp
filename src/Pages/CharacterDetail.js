@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+
 import {useSelector, useDispatch} from 'react-redux';
 
 import {addFavoriteCharacter, removeFavoriteCharacter} from '../redux/favorite';
