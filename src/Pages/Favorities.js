@@ -1,51 +1,43 @@
 import React from 'react';
-import {View, Text, FlatList, SafeAreaView} from 'react-native';
 
-import {useSelector} from 'react-redux';
+import {SafeAreaView, StyleSheet} from 'react-native';
+
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+
+import Header from '../Components/Header';
+import FavorieEpisode from './FavoriteEpisode';
+import FavoriteCharacter from './FavoriteCharacter';
+
+import routes from '../navigation/routes';
+
+const Tab = createMaterialTopTabNavigator();
 
 const FavoriteEpisodesList = () => {
-
-  const favoriteEpisodes = useSelector(
-    state => state.favorite.favoriteEpisodeList,
-  );
-
-  const favoriteCharacters = useSelector(
-    state => state.favorite.favoriteCharacterList,
-  );
-
   return (
-    <SafeAreaView>
-      <View style={{margin: 10}}>
-        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-          Favori Bölümlerim
-        </Text>
-        <FlatList
-          data={favoriteEpisodes}
-          renderItem={({item}) => (
-            <View style={{marginVertical: 5}}>
-              <Text>{item.name}</Text>
-            </View>
-          )}
-          keyExtractor={item => item.id.toString()}
-        />
-      </View>
+    <SafeAreaView style={styles.container}>
+      <Header title="Favorites" />
 
-      <View style={{margin: 10}}>
-        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-          Favori Karakterlerim
-        </Text>
-        <FlatList
-          data={favoriteCharacters}
-          renderItem={({item}) => (
-            <View style={{marginVertical: 5}}>
-              <Text>{item.name}</Text>
-            </View>
-          )}
-          keyExtractor={item => item.id.toString()}
+      <Tab.Navigator>
+        <Tab.Screen
+          options={{title: 'Favorite Episodes'}}
+          name={routes.FAVORITE_EPISODE}
+          component={FavorieEpisode}
         />
-      </View>
+        <Tab.Screen
+          options={{title: 'Favorite Characters'}}
+          name={routes.FAVORITE_CHARACTER}
+          component={FavoriteCharacter}
+        />
+      </Tab.Navigator>
     </SafeAreaView>
   );
 };
 
 export default FavoriteEpisodesList;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
+});
