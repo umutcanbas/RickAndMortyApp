@@ -82,7 +82,7 @@ const Home = () => {
             <Text style={styles.episodeText}>{item.episode}</Text>
 
             <View style={styles.favoriteContainer}>
-              <TouchableOpacity onPress={() => handlePress(item)}>
+              <TouchableOpacity  onPress={() => handlePress(item)}>
                 <HeartIcon
                   width={25}
                   height={25}
@@ -115,10 +115,13 @@ const Home = () => {
         ListFooterComponent={() =>
           showMoreButton ? (
             <TouchableOpacity
+              activeOpacity={0.8}
               style={styles.moreButton}
               onPress={loadMoreEpisodes}>
               <Text style={styles.moreButtonText}>More</Text>
+
             </TouchableOpacity>
+            
           ) : null
         }
       />
