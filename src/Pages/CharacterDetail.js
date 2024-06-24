@@ -13,6 +13,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {addFavoriteCharacter, removeFavoriteCharacter} from '../redux/favorite';
 
 import Header from '../Components/Header';
+
 import HeartIcon from '../assets/svg/heart.svg';
 
 const CharacterDetail = ({route}) => {
@@ -39,7 +40,7 @@ const CharacterDetail = ({route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title={character.name} icon={true} />
+      <Header title={character.name} back={true}/>
       <View style={styles.imageContainer}>
         <Image
           source={{uri: character.image}}
