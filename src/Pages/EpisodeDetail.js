@@ -51,7 +51,9 @@ const EpisodeDetail = ({route}) => {
           <TouchableOpacity
             activeOpacity={0.8}
             key={character.id}
-            onPress={() => navigation.navigate(routes.CHARACTER_DETAIL, {character})}>
+            onPress={() =>
+              navigation.navigate(routes.CHARACTER_DETAIL, {character})
+            }>
             <View style={styles.characterNameContainer}>
               <Text style={styles.characterNameText}>{character.name}</Text>
             </View>
